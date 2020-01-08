@@ -17,9 +17,11 @@
                 <a href="#">EDITAR LOJAS</a>
             </li>
 
-            <li>
-                <a href="#">Teste</a>
-            </li>
+            @foreach ($categories as $category)
+                <li>
+                    <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category">{{ $category->name }}</a>
+                </li>
+            @endforeach
         </ul>
     </nav>
 </header>

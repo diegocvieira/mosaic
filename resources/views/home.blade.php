@@ -1,3 +1,7 @@
+@php
+    header("X-Frame-Options: SAMEORIGIN");
+@endphp
+
 @extends('app')
 
 @section('content')
@@ -6,17 +10,11 @@
     <div class="page full-height">
         <div class="stores">
             <ul>
-                <li>
-                    <a href="https://www.submarino.com.br/" data-search="https://www.submarino.com.br/busca/">Submarino</a>
-                </li>
-
-                <li>
-                    <a href="https://www.americanas.com.br/" data-search="https://www.americanas.com.br/busca/">Americanas</a>
-                </li>
-
-                <li>
-                    <a href="https://www.mercadolivre.com.br/" data-search="https://lista.mercadolivre.com.br/">Mercado Livre</a>
-                </li>
+                @foreach ($stores as $store)
+                    <li>
+                        <a href="{{ $store->url_home }}" data-search="{{ $store->url_search }}">{{ $store->name }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

@@ -15,6 +15,10 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('slug');
+            $table->string('url_home');
+            $table->string('url_search');
             $table->timestamps();
         });
     }

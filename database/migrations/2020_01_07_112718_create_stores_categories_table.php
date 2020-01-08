@@ -15,6 +15,10 @@ class CreateStoresCategoriesTable extends Migration
     {
         Schema::create('stores_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
