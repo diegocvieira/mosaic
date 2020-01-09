@@ -54,6 +54,8 @@ $(function() {
     $(document).on('click', 'header nav .stores-filter-category', function(e) {
         e.preventDefault();
 
+        $('header .backdrop-menu').trigger('click');
+
         $.ajax({
             url: $(this).attr('href'),
             method: 'GET',
@@ -64,12 +66,40 @@ $(function() {
                 $(data).each(function(index, element) {
                     $('.stores ul').append("<li><a href='" + element.url_home + "' data-search='" + element.url_search + "'>" + element.name + "</a></li>");
                 });
-
-                $('header .backdrop-menu').trigger('click');
             },
             error: function (request, status, error) {
                 //modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
             }
         });
+    });
+
+    // Change store status (activate/desactivate)
+    $(document).on('click', '.page-list-stores .store', function(e) {
+        e.preventDefault();
+
+        var divswitch = $(this).find('.switch'),
+            status = divswitch.hasClass('active') ? 'desativar' : 'ativar',
+            url = '/lojas/' + status + '/' + $(this).data('storeid');
+
+        divswitch.toggleClass('active');
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+            },
+            error: function (request, status, error) {
+                divswitch.toggleClass('active');
+
+                //modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+            }
+        });
+    });
+
+    $(document).on('click', '.page-list-stores .category-name', function() {
+        $(this).next().slideToggle();
+        $(this).toggleClass('open');
     });
 });

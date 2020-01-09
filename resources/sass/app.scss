@@ -27,49 +27,149 @@ li {
 
 .page {
     float: left;
+    width: 100%;
+
+}
+
+.page-home {
     margin-top: 40px;
-    width: 100%;
     height: calc(100% - 40px);
-}
 
-iframe {
-    float: left;
-    width: 100%;
-    height: calc(100% - 50px);
-    border: none;
-}
+    iframe {
+        float: left;
+        width: 100%;
+        height: calc(100% - 50px);
+        border: none;
+    }
 
-.stores::-webkit-scrollbar {
-    display: none;
-}
+    .stores::-webkit-scrollbar {
+        display: none;
+    }
 
-.stores {
-    height: 50px;
-    width: 100%;
-    float: left;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    z-index: 0;
-    position: relative;
+    .stores {
+        height: 50px;
+        width: 100%;
+        float: left;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        z-index: 0;
+        position: relative;
 
-    li {
-        display: inline-block;
+        li {
+            display: inline-block;
 
-        a {
-            font-size: 12.5px;
-            color: rgb(150, 150, 150);
-            text-transform: uppercase;
-            display: block;
-            padding: 15px 10px 0 10px;
-            outline: none;
+            a {
+                font-size: 12.5px;
+                color: rgb(150, 150, 150);
+                text-transform: uppercase;
+                display: block;
+                padding: 15px 10px 0 10px;
+                outline: none;
 
-            &.active {
-                border-bottom: 3px solid rgb(150, 150, 150);
+                &.active {
+                    border-bottom: 3px solid rgb(150, 150, 150);
+                }
             }
         }
     }
 }
 
-@import '_header';
+.page-list-stores {
+    .list-categories {
+        float: left;
+        width: 100%;
+
+        .item {
+            float: left;
+            width: 100%;
+
+            .category-name {
+                float: left;
+                width: 100%;
+                background-color: transparent;
+                border: none;
+                position: relative;
+
+                &:after {
+                    content: '';
+                    width: 40px;
+                    height: 40px;
+                    background-position: right;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-image: url('../images/icon-arrow2.png');
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    transition: .2s;
+                }
+
+                &.open:after {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .list-stores {
+                float: left;
+                width: 100%;
+                display: none;
+
+                .store {
+                    float: left;
+                    width: 100%;
+
+                    .store-name {
+                        float: left;
+                        width: calc(100% - 50px);
+                        font-size: 20px;
+                    }
+
+                    .store-status {
+                        float: left;
+                        position: relative;
+                        width: 50px;
+
+                        .switch {
+                            position: absolute;
+                            top: 0;
+                            left: 5px;
+                            background-color: #f06c6c;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                            border-radius: 34px;
+                            width: 40px;
+                            height: 20px;
+
+                            &:before {
+                                position: absolute;
+                                content: "";
+                                height: 13px;
+                                width: 13px;
+                                left: 3px;
+                                top: 3.95px;
+                                background-color: white;
+                                -webkit-transition: .4s;
+                                transition: .4s;
+                                border-radius: 50%;
+                            }
+
+                            &.active {
+                                background-color: #84ce6f;
+
+                                &:before {
+                                    -webkit-transform: translateX(21px);
+                                    -ms-transform: translateX(21px);
+                                    transform: translateX(21px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@import 'header';

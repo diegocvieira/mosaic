@@ -11,26 +11,38 @@ class StoreController extends Controller
 {
     public function list()
     {
-        $categories = Category::has('stores')->with('stores')->orderBy('name', 'ASC')->get();
+        $categories = Category::has('stores')
+            ->with('stores')
+            ->orderBy('name', 'ASC')
+            ->get();
 
         return view('list-stores', compact('categories'));
     }
 
-    public function filterCategory($category_slug)
+    public function filterCategory($category_slug = null)
     {
-        $stores = Store::whereHas('categories', function ($query) use ($category_slug) {
-                $query->where('slug', $category_slug);
-            })
-            ->get();
+        $stores = Store::whereIn('id', _getActiveStores());
 
-        return $stores;
+        if ($category_slug) {
+            $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
+                    $query->where('slug', $category_slug);
+                });
+        }
+
+        $stores = $stores->orderBy('name', 'ASC')->get();
+
+        return json_encode($stores);
     }
 
     public function activate($store_id)
     {
-        $stores_id = Cookie::get('stores_id') ? Cookie::get('stores_id') . ',' . $store_id : $store_id;
+        $stores_id = Cookie::get('stores_id')
+                    ? Cookie::get('stores_id') . ',' . $store_id
+                    : $store_id;
 
         Cookie::queue('stores_id', $stores_id, '525600');
+
+        return json_encode(true);
     }
 
     public function desactivate($store_id)
@@ -43,6 +55,6 @@ class StoreController extends Controller
 
         Cookie::queue('stores_id', implode(',', $stores_id), '525600');
 
-        return Cookie::get('stores_id');
+        return json_encode(true);
     }
 }

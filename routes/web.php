@@ -16,10 +16,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'lojas'], function () {
     Route::get('/', 'StoreController@list')->name('stores-list');
 
-    Route::get('filtro/categoria/{category_slug}', 'StoreController@filterCategory')->name('stores-filter-category');
+    Route::get('filtro/categoria/{category_slug?}', 'StoreController@filterCategory')->name('stores-filter-category');
 
-    Route::get('activate/{store_id}', 'StoreController@activate')->name('store-activate');
-    Route::get('desactivate/{store_id}', 'StoreController@desactivate')->name('store-desactivate');
+    Route::get('ativar/{store_id}', 'StoreController@activate')->name('store-activate');
+    Route::get('desativar/{store_id}', 'StoreController@desactivate')->name('store-desactivate');
 });
 
 Route::group(['prefix' => 'admin'], function () {

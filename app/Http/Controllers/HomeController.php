@@ -11,14 +11,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $stores_id = explode(',', Cookie::get('stores_id'));
+        $stores = Store::whereIn('id', _getActiveStores())
+            ->orderBy('name', 'ASC')
+            ->get();
 
-        $stores = Store::whereIn('id', $stores_id)->orderBy('name', 'ASC')->get();
-
-        $categories = Category::whereHas('stores', function ($query) use ($stores_id) {
-            $query->whereIn('stores.id', $stores_id);
-        })
-        ->orderBy('name', 'ASC')->get();
+        $categories = Category::whereHas('stores', function ($query) {
+                $query->whereIn('stores.id', _getActiveStores());
+            })
+            ->orderBy('name', 'ASC')->get();
 
         return view('home', compact('stores', 'categories'));
     }
