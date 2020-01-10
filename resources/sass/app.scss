@@ -80,10 +80,13 @@ li {
     .list-categories {
         float: left;
         width: 100%;
+        padding: 0 20px;
 
         .item {
             float: left;
             width: 100%;
+            border-bottom: 1px solid rgb(235, 235, 235);
+            padding: 20px 0;
 
             .category-name {
                 float: left;
@@ -91,11 +94,15 @@ li {
                 background-color: transparent;
                 border: none;
                 position: relative;
+                font-size: 14.5px;
+                color: rgb(150, 150, 150);
+                text-align: left;
+                outline: none;
 
                 &:after {
                     content: '';
-                    width: 40px;
-                    height: 40px;
+                    width: 30px;
+                    height: 30px;
                     background-position: right;
                     background-repeat: no-repeat;
                     background-size: contain;
@@ -115,15 +122,19 @@ li {
                 float: left;
                 width: 100%;
                 display: none;
+                padding-left: 15px;
+                margin-top: 15px;
 
                 .store {
                     float: left;
                     width: 100%;
+                    padding: 10px 0;
 
                     .store-name {
                         float: left;
                         width: calc(100% - 50px);
-                        font-size: 20px;
+                        font-size: 14.5px;
+                        color: rgb(100, 100, 100);
                     }
 
                     .store-status {
@@ -135,20 +146,20 @@ li {
                             position: absolute;
                             top: 0;
                             left: 5px;
-                            background-color: #f06c6c;
+                            background-color: #e6e6e6;
                             -webkit-transition: .4s;
                             transition: .4s;
                             border-radius: 34px;
-                            width: 40px;
-                            height: 20px;
+                            width: 36px;
+                            height: 18px;
 
                             &:before {
                                 position: absolute;
                                 content: "";
-                                height: 13px;
-                                width: 13px;
+                                height: 12px;
+                                width: 12px;
                                 left: 3px;
-                                top: 3.95px;
+                                top: 2.9px;
                                 background-color: white;
                                 -webkit-transition: .4s;
                                 transition: .4s;
@@ -156,9 +167,10 @@ li {
                             }
 
                             &.active {
-                                background-color: #84ce6f;
+                                background-color: #70ca7c;
 
                                 &:before {
+                                    left: 1px;
                                     -webkit-transform: translateX(21px);
                                     -ms-transform: translateX(21px);
                                     transform: translateX(21px);
