@@ -36,8 +36,8 @@ class StoreController extends Controller
 
     public function activate($store_id)
     {
-        $stores_id = Cookie::get('stores_id')
-                    ? Cookie::get('stores_id') . ',' . $store_id
+        $stores_id = _getStoreCookie()
+                    ? _getStoreCookie() . ',' . $store_id
                     : $store_id;
 
         Cookie::queue('stores_id', $stores_id, '525600');
@@ -47,7 +47,7 @@ class StoreController extends Controller
 
     public function desactivate($store_id)
     {
-        $stores_id = explode(',', Cookie::get('stores_id'));
+        $stores_id = explode(',', _getStoreCookie());
 
         if (($key = array_search($store_id, $stores_id)) !== false) {
             unset($stores_id[$key]);

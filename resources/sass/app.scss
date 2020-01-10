@@ -1,6 +1,14 @@
+@font-face {
+    font-family: 'ProductSansRegular';
+    src: url('../fonts/ProductSansRegular.ttf') format('truetype');
+}
+
 body {
     font-family: 'Roboto', sans-serif;
-    transition: .5s;
+    transition: opacity .5s ease-out;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 html, body {
@@ -16,6 +24,10 @@ li {
     list-style: none;
 }
 
+* {
+    outline: 0 !important;
+}
+
 .backdrop {
     position: fixed;
     width: 100%;
@@ -28,160 +40,8 @@ li {
 .page {
     float: left;
     width: 100%;
-
-}
-
-.page-home {
-    margin-top: 40px;
-    height: calc(100% - 40px);
-
-    iframe {
-        float: left;
-        width: 100%;
-        height: calc(100% - 50px);
-        border: none;
-    }
-
-    .stores::-webkit-scrollbar {
-        display: none;
-    }
-
-    .stores {
-        height: 50px;
-        width: 100%;
-        float: left;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        z-index: 0;
-        position: relative;
-
-        li {
-            display: inline-block;
-
-            a {
-                font-size: 12.5px;
-                color: rgb(150, 150, 150);
-                text-transform: uppercase;
-                display: block;
-                padding: 15px 10px 0 10px;
-                outline: none;
-
-                &.active {
-                    border-bottom: 3px solid rgb(150, 150, 150);
-                }
-            }
-        }
-    }
-}
-
-.page-list-stores {
-    .list-categories {
-        float: left;
-        width: 100%;
-        padding: 0 20px;
-
-        .item {
-            float: left;
-            width: 100%;
-            border-bottom: 1px solid rgb(235, 235, 235);
-            padding: 20px 0;
-
-            .category-name {
-                float: left;
-                width: 100%;
-                background-color: transparent;
-                border: none;
-                position: relative;
-                font-size: 14.5px;
-                color: rgb(150, 150, 150);
-                text-align: left;
-                outline: none;
-
-                &:after {
-                    content: '';
-                    width: 30px;
-                    height: 30px;
-                    background-position: right;
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    background-image: url('../images/icon-arrow2.png');
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    transition: .2s;
-                }
-
-                &.open:after {
-                    transform: rotate(180deg);
-                }
-            }
-
-            .list-stores {
-                float: left;
-                width: 100%;
-                display: none;
-                padding-left: 15px;
-                margin-top: 15px;
-
-                .store {
-                    float: left;
-                    width: 100%;
-                    padding: 10px 0;
-
-                    .store-name {
-                        float: left;
-                        width: calc(100% - 50px);
-                        font-size: 14.5px;
-                        color: rgb(100, 100, 100);
-                    }
-
-                    .store-status {
-                        float: left;
-                        position: relative;
-                        width: 50px;
-
-                        .switch {
-                            position: absolute;
-                            top: 0;
-                            left: 5px;
-                            background-color: #e6e6e6;
-                            -webkit-transition: .4s;
-                            transition: .4s;
-                            border-radius: 34px;
-                            width: 36px;
-                            height: 18px;
-
-                            &:before {
-                                position: absolute;
-                                content: "";
-                                height: 12px;
-                                width: 12px;
-                                left: 3px;
-                                top: 2.9px;
-                                background-color: white;
-                                -webkit-transition: .4s;
-                                transition: .4s;
-                                border-radius: 50%;
-                            }
-
-                            &.active {
-                                background-color: #70ca7c;
-
-                                &:before {
-                                    left: 1px;
-                                    -webkit-transform: translateX(21px);
-                                    -ms-transform: translateX(21px);
-                                    transform: translateX(21px);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 @import 'header';
+@import 'home';
+@import 'list-stores';

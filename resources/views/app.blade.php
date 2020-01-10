@@ -3,14 +3,13 @@
     <head>
     	<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="google-site-verification" content="QmIWiV6myEkzAONZs45zJROviJCSlA-6kSCE4bQjTNY" />
 
     	<title>{{ $header_title ?? 'Mosaic' }}</title>
 
         <base href="{{ url('/') }}">
         <link rel="canonical" href="{{ $header_canonical ?? url()->current() }}" />
-    	<link rel="shortcut icon" href="{{ asset('images/icon-infochat.png') }}">
-    	<meta name="theme-color" content="#756ff1">
+    	<link rel="shortcut icon" href="{{ asset('images/icon-mosaic.png') }}">
+    	<meta name="theme-color" content="#fff">
         <meta name="csrf-token" content="{!! csrf_token() !!}">
 
         <style>body{opacity:0;}</style>
@@ -29,12 +28,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         <script src="{{ mix('js/app.js') }}"></script>
-
-        @if (session('session_flash'))
-            <script>
-                modalAlert("{!! session('session_flash') !!}");
-            </script>
-        @endif
 
         @yield ('script')
     </body>

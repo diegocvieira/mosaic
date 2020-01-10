@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="page page-list-stores">
-        <header>
-            <a href="{{ route('home') }}">Voltar</a>
+        <header class="header-simple">
+            <a href="{{ route('home') }}" class="back-link">Voltar</a>
         </header>
 
         <div class="list-categories">
@@ -17,7 +17,7 @@
                                 <h3 class="store-name">{{ $store->name }}</h3>
 
                                 <div class="store-status">
-                                    <span class="switch {{ in_array($store->id, explode(',', Cookie::get('stores_id'))) ? 'active' : '' }}"></span>
+                                    <span class="switch {{ _isStoreActive($store->id) ? 'active' : '' }}"></span>
                                 </div>
                             </div>
                         @endforeach

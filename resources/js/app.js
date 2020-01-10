@@ -41,10 +41,8 @@ $(function() {
         var keyword = $(this).find('input[type=text]').val(),
             site = $('.stores').find('.active');
 
-        if (site.length) {
+        if (site.length && keyword) {
             $('.page').find('iframe').attr('src', site.data('search').replace('__keyword__', keyword));
-        } else {
-            alert('selecione uma loja');
         }
 
         return false;
@@ -53,6 +51,9 @@ $(function() {
     // Stores filter category
     $(document).on('click', 'header nav .stores-filter-category', function(e) {
         e.preventDefault();
+
+        $('header').find('nav .stores-filter-category').removeClass('active');
+        $(this).addClass('active');
 
         $('header .backdrop-menu').trigger('click');
 
@@ -68,18 +69,26 @@ $(function() {
                 });
             },
             error: function (request, status, error) {
-                //modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
             }
         });
+    });
+
+    // Show stores
+    $(document).on('click', '.page-list-stores .category-name', function() {
+        $(this).next().slideToggle();
+
+        $(this).toggleClass('open');
     });
 
     // Change store status (activate/desactivate)
     $(document).on('click', '.page-list-stores .store', function(e) {
         e.preventDefault();
 
-        var divswitch = $(this).find('.switch'),
+        var store_id = $(this).data('storeid'),
+            divswitch = $('.store[data-storeid=' + store_id + ']').find('.switch'),
             status = divswitch.hasClass('active') ? 'desativar' : 'ativar',
-            url = '/lojas/' + status + '/' + $(this).data('storeid');
+            url = '/lojas/' + status + '/' + store_id;
 
         divswitch.toggleClass('active');
 
@@ -93,13 +102,8 @@ $(function() {
             error: function (request, status, error) {
                 divswitch.toggleClass('active');
 
-                //modalAlert('Ocorreu um erro inesperado. Atualize a página e tente novamente.');
+                alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
             }
         });
-    });
-
-    $(document).on('click', '.page-list-stores .category-name', function() {
-        $(this).next().slideToggle();
-        $(this).toggleClass('open');
     });
 });
