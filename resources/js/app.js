@@ -21,6 +21,8 @@ $(function() {
 
         var keyword = $('header .form-search').find('input[type=text]').val();
 
+        $('.no-store').remove();
+
         $('.stores').find('a').removeClass('active');
 
         $(this).addClass('active');
@@ -36,7 +38,7 @@ $(function() {
         }
     });
 
-    // Show store search
+    // Search stores
     $(document).on('submit', 'header .form-search', function() {
         var keyword = $(this).find('input[type=text]').val(),
             site = $('.stores').find('.active');

@@ -9,15 +9,19 @@ header {
 
     &.header-simple {
         height: auto;
+        border-bottom: 1px solid rgb(235, 235, 235);
+        padding: 15px 0 15px 15px;
 
         .back-link {
-            color: #000;
             float: left;
-            padding-left: 20px;
+            padding-left: 25px;
             background-image: url('../images/icon-arrow.png');
             background-position: left;
-            background-size: 20px;
+            background-size: 15px;
             background-repeat: no-repeat;
+            font-size: 13.7px;
+            color: rgb(100, 100, 100);
+            font-weight: 700;
         }
     }
 
@@ -28,6 +32,8 @@ header {
 
         .logo {
             width: auto;
+            position: relative;
+            top: -3px;
 
             img {
                 margin-left: 10px;
@@ -55,6 +61,8 @@ header {
             display: none;
             position: relative;
             top: 3px;
+            font-size: 21px;
+            color: #000;
         }
     }
 

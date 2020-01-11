@@ -3,7 +3,7 @@
 @section('content')
     <div class="page page-list-stores">
         <header class="header-simple">
-            <a href="{{ route('home') }}" class="back-link">Voltar</a>
+            <a href="{{ route('home') }}" class="back-link">VOLTAR</a>
         </header>
 
         <div class="list-categories">
