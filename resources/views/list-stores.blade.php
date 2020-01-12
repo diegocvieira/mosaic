@@ -25,5 +25,17 @@
                 </div>
             @endforeach
         </div>
+
+        <div class="suggest-store">
+            <h4>SUGERIR LOJA</h4>
+
+            {!! Form::open(['method' => 'POST', 'route' => 'store-suggest']) !!}
+                {!! Form::text('store_name', null, ['placeholder' => 'Nome da loja']) !!}
+
+                {!! Form::text('store_url', null, ['placeholder' => 'Site da loja']) !!}
+
+                {!! Form::submit('ENVIAR') !!}
+            {!! Form::close() !!}
+        </div>
     </div>
 @endsection

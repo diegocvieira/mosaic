@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use Cookie;
+use Mail;
+use Validator;
 use App\Models\Category;
 
 class StoreController extends Controller
@@ -56,5 +58,34 @@ class StoreController extends Controller
         Cookie::queue('stores_id', implode(',', $stores_id), '525600');
 
         return json_encode(true);
+    }
+
+    public function suggest(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            ['store_name' => 'required', 'store_url' => 'required'],
+            ['store_name.required' => 'Informe o nome da loja.', 'store_url' => 'Informe o site da loja.']
+        );
+
+        if ($validator->fails()) {
+            $return['message'] = $validator->errors()->first();
+            $return['success'] = false;
+        } else {
+            try {
+                Mail::send('emails.store-suggest', ['request' => $request], function ($query) {
+                    $query->from('no-reply@mosaic.com.br', 'Mosaic');
+                    $query->to('teste@gmail.com')->subject('Nova sugestão de loja - Mosaic');
+                });
+
+                $return['message'] = 'Sugestão enviada com sucesso!';
+                $return['success'] = true;
+            } catch (\Exception $e) {
+                $return['message'] = 'Ocorreu um erro inesperado. Por favor, tente novamente.';
+                $return['success'] = false;
+            }
+
+            return json_encode($return);
+        }
     }
 }

@@ -20,6 +20,8 @@ Route::group(['prefix' => 'lojas'], function () {
 
     Route::get('ativar/{store_id}', 'StoreController@activate')->name('store-activate');
     Route::get('desativar/{store_id}', 'StoreController@desactivate')->name('store-desactivate');
+
+    Route::post('sugerir', 'StoreController@suggest')->name('store-suggest');
 });
 
 Route::group(['prefix' => 'admin'], function () {

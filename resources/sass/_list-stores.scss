@@ -10,10 +10,6 @@
             width: 100%;
             border-bottom: 1px solid rgb(235, 235, 235);
 
-            &:last-child {
-                border: none;
-            }
-
             .category-name {
                 float: left;
                 width: 100%;
@@ -105,6 +101,44 @@
                         }
                     }
                 }
+            }
+        }
+    }
+
+    .suggest-store {
+        background-color: rgb(245, 245, 245);
+        float: left;
+        width: 100%;
+        padding: 30px;
+
+        h4 {
+            font-size: 14.5px;
+            color: rgb(100, 100, 100);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        form {
+            input[type=text] {
+                font-size: 13.7px;
+                color: #000;
+                border: none;
+                background-color: transparent;
+                display: block;
+                border-bottom: 1px solid rgb(235, 235, 235);
+                margin-bottom: 30px;
+                width: 100%;
+                padding: 0 0 5px 15px
+            }
+
+            input[type=submit] {
+                border: none;
+                background-color: transparent;
+                font-size: 14.5px;
+                color: rgb(100, 100, 100);
+                font-weight: 700;
+                float: right;
             }
         }
     }

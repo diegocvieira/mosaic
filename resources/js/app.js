@@ -108,4 +108,37 @@ $(function() {
             }
         });
     });
+
+    // Suggest store
+    $(document).on('submit', '.page-list-stores .suggest-store form', function(e) {
+        var form = $(this),
+            btn = form.find('input[type=submit]');
+
+        if (form.find('input[name=store_name]').val() && form.find('input[name=store_url]').val()) {
+            btn.prop('disabled', true).val('ENVIANDO');
+
+            $.ajax({
+                url: form.attr('action'),
+                method: 'POST',
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function (data) {
+                    btn.prop('disabled', false).val('ENVIAR');
+
+                    if (data.success) {
+                        form.find('input[type=text]').val('');
+                    }
+
+                    alert(data.message);
+                },
+                error: function (request, status, error) {
+                    btn.prop('disabled', false).val('ENVIAR');
+
+                    alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
+                }
+            });
+        }
+
+        return false;
+    });
 });
