@@ -75,7 +75,7 @@ class StoreController extends Controller
             try {
                 Mail::send('emails.store-suggest', ['request' => $request], function ($query) {
                     $query->from('no-reply@mosaic.com.br', 'Mosaic');
-                    $query->to('teste@gmail.com')->subject('Nova sugestão de loja - Mosaic');
+                    $query->to('felipeoreis11@gmail.com')->subject('Nova sugestão de loja - Mosaic');
                 });
 
                 $return['message'] = 'Sugestão enviada com sucesso!';
