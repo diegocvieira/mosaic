@@ -25,9 +25,16 @@ Route::group(['prefix' => 'lojas'], function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('categoria/cadastro', 'AdminController@showCategoryRegister');
-    Route::post('categoria/cadastro', 'AdminController@saveCategoryRegister')->name('save-category');
+    Route::get('login', 'AdminController@showLogin')->name('admin-show-login');
+    Route::post('login', 'AdminController@sendLogin')->name('admin-send-login');
 
-    Route::get('loja/cadastro', 'AdminController@showStoreRegister');
-    Route::post('loja/cadastro', 'AdminController@saveStoreRegister')->name('save-store');
+    Route::group(['middleware' => 'adminCheck'], function () {
+        Route::get('index', 'AdminController@index')->name('admin-index');
+
+        Route::get('categoria/cadastro', 'AdminController@showCategoryRegister')->name('admin-show-category-register');
+        Route::post('categoria/cadastro', 'AdminController@saveCategoryRegister')->name('save-category');
+
+        Route::get('loja/cadastro', 'AdminController@showStoreRegister')->name('admin-show-store-register');
+        Route::post('loja/cadastro', 'AdminController@saveStoreRegister')->name('save-store');
+    });
 });
