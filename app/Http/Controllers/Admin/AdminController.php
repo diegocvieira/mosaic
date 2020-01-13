@@ -20,7 +20,7 @@ class AdminController extends Controller
         if ($request->password === 'PSwrhvna2QrAWx2z') {
             session(['admin_checked' => 'true']);
 
-            return redirect()->route('admin-index');
+            return redirect()->route('admin.index');
         } else {
             session()->flash('flash_message', 'Senha incorreta.');
 
