@@ -141,4 +141,12 @@ $(function() {
 
         return false;
     });
+
+    $(document).on('click', '.delete-button', function(e) {
+        if (confirm('Tem certeza que deseja excluir?')) {
+            return true;
+        } else {
+            return false;
+        }
+    });
 });

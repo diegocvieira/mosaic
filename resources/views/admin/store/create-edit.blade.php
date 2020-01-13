@@ -2,12 +2,11 @@
 
 @section('content')
     <div class="page page-admin">
-        {!! Form::open(['method' => 'POST', 'route' => 'save-store', 'class' => 'p-5']) !!}
-            @if (session('flash_message'))
-                <div class="alert alert-info" role="alert">
-                    {{ session('flash_message') }}
-                </div>
-            @endif
+        @if (isset($store))
+            {!! Form::model($store, ['method' => 'PUT', 'route' => ['admin.store.update', $store->id], 'class' => 'p-5']) !!}
+        @else
+            {!! Form::open(['method' => 'POST', 'route' => 'admin.store.store', 'class' => 'p-5']) !!}
+        @endif
 
             <div class="form-group">
                 {!! Form::label('name', 'Nome da loja') !!}
@@ -26,13 +25,13 @@
 
             <div class="form-group form-check">
                 @foreach ($categories as $category)
-                    {!! Form::checkbox('category[]', $category->id, null, ['class' => 'form-check-input', 'id' => 'category-' . $category->slug]) !!}
+                    {!! Form::checkbox('category[]', $category->id, (isset($store) && in_array($category->id, $store_categories)) ? true : false, ['class' => 'form-check-input', 'id' => 'category-' . $category->slug]) !!}
                     {!! Form::label('category-' . $category->slug, $category->name) !!}
                     <br>
                 @endforeach
             </div>
 
-            {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit('SALVAR', ['class' => 'btn btn-primary']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

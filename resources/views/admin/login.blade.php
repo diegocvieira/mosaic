@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page page-admin">
-        {!! Form::open(['method' => 'POST', 'route' => 'admin-send-login', 'class' => 'p-5']) !!}
+        {!! Form::open(['method' => 'POST', 'route' => 'admin.login', 'class' => 'p-5']) !!}
             @if (session('flash_message'))
                 <div class="alert alert-info" role="alert">
                     {{ session('flash_message') }}

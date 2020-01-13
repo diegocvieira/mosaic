@@ -22,6 +22,12 @@
         <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
     </head>
     <body class="{{ $body_class ?? '' }}">
+        @if (session('flash_message'))
+            <div class="alert alert-info" role="alert">
+                {{ session('flash_message') }}
+            </div>
+        @endif
+
         @yield ('content')
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
