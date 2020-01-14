@@ -24,17 +24,35 @@ Route::group(['prefix' => 'lojas'], function () {
     Route::post('sugerir', 'StoreController@suggest')->name('store-suggest');
 });
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('login', 'AdminController@showLogin')->name('admin-show-login');
-    Route::post('login', 'AdminController@sendLogin')->name('admin-send-login');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+    Route::get('login', 'AdminController@showLogin')->name('login');
+    Route::post('login', 'AdminController@login')->name('login');
 
     Route::group(['middleware' => 'adminCheck'], function () {
-        Route::get('index', 'AdminController@index')->name('admin-index');
+        Route::get('index', 'AdminController@index')->name('index');
 
-        Route::get('categoria/cadastro', 'AdminController@showCategoryRegister')->name('admin-show-category-register');
-        Route::post('categoria/cadastro', 'AdminController@saveCategoryRegister')->name('save-category');
+        Route::group(['prefix' => 'lojas', 'as' => 'store.'], function () {
+            Route::get('/', 'StoreController@index')->name('index');
 
-        Route::get('loja/cadastro', 'AdminController@showStoreRegister')->name('admin-show-store-register');
-        Route::post('loja/cadastro', 'AdminController@saveStoreRegister')->name('save-store');
+            Route::get('cadastrar', 'StoreController@create')->name('create');
+            Route::post('cadastrar', 'StoreController@store')->name('store');
+
+            Route::get('editar/{id}', 'StoreController@edit')->name('edit');
+            Route::put('editar/{id}', 'StoreController@update')->name('update');
+
+            Route::get('deletar/{id}', 'StoreController@destroy')->name('destroy');
+        });
+
+        Route::group(['prefix' => 'categorias', 'as' => 'category.'], function () {
+            Route::get('/', 'CategoryController@index')->name('index');
+
+            Route::get('cadastrar', 'CategoryController@create')->name('create');
+            Route::post('cadastrar', 'CategoryController@store')->name('store');
+
+            Route::get('editar/{id}', 'CategoryController@edit')->name('edit');
+            Route::put('editar/{id}', 'CategoryController@update')->name('update');
+
+            Route::get('deletar/{id}', 'CategoryController@destroy')->name('destroy');
+        });
     });
 });

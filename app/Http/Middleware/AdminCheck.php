@@ -16,7 +16,7 @@ class AdminCheck
     public function handle($request, Closure $next)
     {
         if (!session('admin_checked')) {
-            return redirect()->route('admin-show-login');
+            return redirect()->route('admin.login');
         }
 
         return $next($request);
