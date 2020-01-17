@@ -34,23 +34,24 @@ $(function() {
     $(document).on('click', '.stores a', function(e) {
         e.preventDefault();
 
-        var keyword = convertToSlug($('header .form-search').find('input[type=text]').val());
+        var keyword = convertToSlug($('header .form-search').find('input[type=text]').val())
+            slug = $(this).data('slug');
 
-        $('.no-store').remove();
+        //$('.no-store').remove();
 
         $('.stores').find('a').removeClass('active');
-
         $(this).addClass('active');
 
-        if (!$('.page').find('iframe').length) {
-            $('.page').append("<iframe src=''></iframe>");
+        if (!$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
+            $('.iframes').append("<iframe src='" + $(this).attr('href') + "' data-slug='" + slug + "' class='active'></iframe>");
         }
 
-        if (keyword) {
-            $('.page').find('iframe').attr('src', $(this).data('search').replace('__keyword__', keyword));
-        } else {
-            $('.page').find('iframe').attr('src', $(this).attr('href'));
-        }
+        $('.iframes').find('iframe').removeClass('active');
+        $('.iframes').find('iframe[data-slug=' + slug + ']').addClass('active');
+
+        //var src = keyword ? $(this).data('search').replace('__keyword__', keyword) : $(this).attr('href');
+
+        //$('.iframes').find('iframe.active').attr('src', src);
     });
 
     // Search stores
@@ -59,7 +60,10 @@ $(function() {
             site = $('.stores').find('.active');
 
         if (site.length && keyword) {
-            $('.page').find('iframe').attr('src', site.data('search').replace('__keyword__', keyword));
+            $('.iframes')
+            .find('iframe.active')
+            .attr('src', site.data('search')
+            .replace('__keyword__', keyword));
         }
 
         return false;

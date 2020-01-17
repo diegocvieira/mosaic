@@ -52,9 +52,9 @@
             </div>
 
             <div class="iframes">
-                <?php /*@foreach ($stores->take(4) as $key => $store)
+                @foreach ($stores->take(4) as $key => $store)
                     <iframe src="{{ $store->url_home }}" data-slug="{{ $store->slug }}" class="{{ $key == 0 ? 'active' : '' }}"></iframe>
-                @endforeach*/ ?>
+                @endforeach
             </div>
 
             <?php /*<div class="no-store">
