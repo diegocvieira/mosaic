@@ -1,6 +1,21 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    $.ajax({
+        url: 'https://www.submarino.com.br/',
+        method: 'GET',
+        crossDomain: true,
+        dataType: 'jsonp',
+        success: function (data) {
+            console.log(data);
+
+            $('body').html(data);
+        },
+        error: function (request, status, error) {
+            console.log('error');
+        }
+    });
+
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
         $('header').append("<div class='backdrop backdrop-menu'></div>");
