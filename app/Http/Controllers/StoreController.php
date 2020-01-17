@@ -14,7 +14,9 @@ class StoreController extends Controller
     public function list()
     {
         $categories = Category::has('stores')
-            ->with('stores')
+            ->with(['stores' => function ($query) {
+                $query->orderBy('name', 'ASC');
+            }])
             ->orderBy('name', 'ASC')
             ->get();
 
