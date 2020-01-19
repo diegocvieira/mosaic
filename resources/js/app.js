@@ -1,21 +1,6 @@
 $(function() {
     $('body').css('opacity', '1');
 
-    $.ajax({
-        url: 'https://www.submarino.com.br/',
-        method: 'GET',
-        crossDomain: true,
-        dataType: 'jsonp',
-        success: function (data) {
-            console.log(data);
-
-            $('body').html(data);
-        },
-        error: function (request, status, error) {
-            console.log('error');
-        }
-    });
-
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
         $('header').append("<div class='backdrop backdrop-menu'></div>");
@@ -34,7 +19,8 @@ $(function() {
     $(document).on('click', '.stores a', function(e) {
         e.preventDefault();
 
-        var keyword = convertToSlug($('header .form-search').find('input[type=text]').val())
+        var keyword = convertToSlug($('header .form-search').find('input[type=text]').val()),
+            store_index = $(this).parent().index(),
             slug = $(this).data('slug');
 
         //$('.no-store').remove();
@@ -52,6 +38,15 @@ $(function() {
         //var src = keyword ? $(this).data('search').replace('__keyword__', keyword) : $(this).attr('href');
 
         //$('.iframes').find('iframe.active').attr('src', src);
+
+        $('.stores').find('li').each(function(index, element) {
+            var store = $(this).find('a'),
+                slug = store.data('slug');
+
+            if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
+                $('.iframes').append("<iframe src='" + store.attr('href') + "' data-slug='" + slug + "'></iframe>");
+            }
+        });
     });
 
     // Search stores
