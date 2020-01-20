@@ -29,7 +29,7 @@ $(function() {
         $(this).addClass('active');
 
         if (!$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-            $('.iframes').append("<iframe src='" + $(this).attr('href') + "' data-slug='" + slug + "' class='active'></iframe>");
+            $('.iframes').append("<iframe src='" + $(this).attr('href') + "' data-slug='" + slug + "' is='x-frame-bypass' class='active'></iframe>");
         }
 
         $('.iframes').find('iframe').removeClass('active');
@@ -44,7 +44,7 @@ $(function() {
                 slug = store.data('slug');
 
             if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-                $('.iframes').append("<iframe src='" + store.attr('href') + "' data-slug='" + slug + "'></iframe>");
+                $('.iframes').append("<iframe src='" + store.attr('href') + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
             }
         });
     });

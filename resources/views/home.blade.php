@@ -52,8 +52,8 @@
             </div>
 
             <div class="iframes">
-                @foreach ($stores->take(1) as $key => $store)
-                    <iframe src="{{ $store->url_home }}" data-slug="{{ $store->slug }}" class="{{ $key == 0 ? 'active' : '' }}"></iframe>
+                @foreach ($stores->take(4) as $key => $store)
+                    <iframe src="{{ $store->url_home }}" is="x-frame-bypass" data-slug="{{ $store->slug }}" class="{{ $key == 0 ? 'active' : '' }}"></iframe>
                 @endforeach
             </div>
 
