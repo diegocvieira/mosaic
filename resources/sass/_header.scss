@@ -129,6 +129,8 @@ header {
             transition: .2s;
             opacity: 0;
             visibility: hidden;
+            max-height: 100%;
+            overflow: auto;
 
             &.active {
                 visibility: visible;
