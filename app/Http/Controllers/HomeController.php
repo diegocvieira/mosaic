@@ -26,8 +26,10 @@ class HomeController extends Controller
             $stores = Store::orderBy('name', 'ASC')->get();
 
             foreach ($stores as $store) {
-                app('App\Http\Controllers\StoreController')->activate($store->id);
+                $stores_id[] = $store->id;
             }
+
+            app('App\Http\Controllers\StoreController')->activate($stores_id);
         }
 
         return view('home', compact('stores', 'categories'));
