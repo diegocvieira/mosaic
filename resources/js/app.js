@@ -59,6 +59,8 @@ $(function() {
             .find('iframe.active')
             .attr('src', site.data('search')
             .replace('__keyword__', keyword));
+
+            $(this).find('input[type=text]').blur();
         }
 
         return false;
