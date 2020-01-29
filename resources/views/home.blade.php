@@ -27,7 +27,7 @@
 
                     @if ($stores)
                         <li>
-                            <a href="{{ route('stores-filter-category') }}" class="stores-filter-category active">Todos</a>
+                            <a href="{{ route('stores-filter-category') }}" class="stores-filter-category active">Todas as lojas</a>
                         </li>
 
                         @foreach ($categories as $category)
