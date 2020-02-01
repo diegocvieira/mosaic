@@ -23,8 +23,6 @@ $(function() {
             store_index = $(this).parent().index(),
             slug = $(this).data('slug');
 
-        //$('.no-store').remove();
-
         $('.stores').find('a').removeClass('active');
         $(this).addClass('active');
 
@@ -34,10 +32,6 @@ $(function() {
 
         $('.iframes').find('iframe').removeClass('active');
         $('.iframes').find('iframe[data-slug=' + slug + ']').addClass('active');
-
-        //var src = keyword ? $(this).data('search').replace('__keyword__', keyword) : $(this).attr('href');
-
-        //$('.iframes').find('iframe.active').attr('src', src);
 
         $('.stores').find('li').each(function(index, element) {
             var store = $(this).find('a'),
@@ -55,10 +49,9 @@ $(function() {
             site = $('.stores').find('.active');
 
         if (site.length && keyword) {
-            $('.iframes')
-            .find('iframe.active')
-            .attr('src', site.data('search')
-            .replace('__keyword__', keyword));
+            $('.iframes').find('iframe.active').remove();
+
+            $('.iframes').append("<iframe src='" + site.data('search').replace('__keyword__', keyword) + "' data-slug='" + site.data('slug') + "' is='x-frame-bypass' class='active'></iframe>");
 
             $(this).find('input[type=text]').blur();
         }
@@ -83,8 +76,10 @@ $(function() {
                 $('.stores ul').find('li').remove();
 
                 $(data).each(function(index, element) {
-                    $('.stores ul').append("<li><a href='" + element.url_home + "' data-search='" + element.url_search + "'>" + element.name + "</a></li>");
+                    $('.stores ul').append("<li><a href='" + element.url_home + "' data-search='" + element.url_search + "' data-slug='" + element.slug + "'>" + element.name + "</a></li>");
                 });
+
+                $('.stores').find('li:first a').trigger('click');
             },
             error: function (request, status, error) {
                 alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
