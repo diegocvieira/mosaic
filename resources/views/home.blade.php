@@ -27,12 +27,12 @@
 
                     @if ($stores)
                         <li>
-                            <a href="{{ route('stores-filter-category') }}" class="stores-filter-category active">Todas as lojas</a>
+                            <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
                         </li>
 
                         @foreach ($categories as $category)
                             <li>
-                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category">{{ $category->name }}</a>
+                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
                             </li>
                         @endforeach
                     @endif
@@ -41,7 +41,7 @@
         </header>
 
         @if ($stores)
-            <div class="stores">
+            <div class="stores" data-routestores="{{ $route_stores }}">
                 <ul>
                     @foreach ($stores as $key => $store)
                         <li>

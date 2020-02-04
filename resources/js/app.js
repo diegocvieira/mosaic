@@ -1,6 +1,13 @@
 $(function() {
     $('body').css('opacity', '1');
 
+    // Set store again if the users come from the stores page
+    $('.stores').ready(function() {
+        if ($('.stores').data('routestores')) {
+            $('.stores').find('a[data-slug=' + sessionStorage.getItem('store_set') + ']').trigger('click');
+        }
+    });
+
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
         $('header').append("<div class='backdrop backdrop-menu'></div>");
@@ -22,6 +29,8 @@ $(function() {
         var keyword = convertToSlug($('header .form-search').find('input[type=text]').val()),
             store_index = $(this).parent().index(),
             slug = $(this).data('slug');
+
+        sessionStorage.setItem('store_set', slug);
 
         $('.stores').find('a').removeClass('active');
         $(this).addClass('active');
@@ -80,6 +89,8 @@ $(function() {
                 });
 
                 $('.stores').find('li:first a').trigger('click');
+
+                $('.stores').animate({ scrollLeft: 0 }, 'fast');
             },
             error: function (request, status, error) {
                 alert('Ocorreu um erro inesperado. Por favor, tente novamente.');

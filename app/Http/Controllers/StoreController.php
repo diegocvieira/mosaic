@@ -23,11 +23,13 @@ class StoreController extends Controller
         return view('list-stores', compact('categories'));
     }
 
-    public function filterCategory($category_slug = null)
+    public function filterCategory($category_slug)
     {
+        session(['filter_category' => $category_slug]);
+
         $stores = Store::whereIn('id', _getActiveStores());
 
-        if ($category_slug) {
+        if ($category_slug != 'all') {
             $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
                     $query->where('slug', $category_slug);
                 });
