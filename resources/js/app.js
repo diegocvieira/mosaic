@@ -3,9 +3,15 @@ $(function() {
 
     // Set store again if the users come from the stores page
     $('.stores').ready(function() {
+        var store = $('.stores').find('a[data-slug=' + sessionStorage.getItem('store_set') + ']');
+
         if ($('.stores').data('routestores')) {
-            $('.stores').find('a[data-slug=' + sessionStorage.getItem('store_set') + ']').trigger('click');
+            store.trigger('click');
         }
+
+        $('.stores').animate({
+            scrollLeft: store.offset().left
+        }, 100);
     });
 
     // Open menu
