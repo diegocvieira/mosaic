@@ -42,11 +42,11 @@ class StoreController extends Controller
 
     public function activate($store_id)
     {
-        // $store_id = is_array($store_id) ? implode(',', $store_id) : $store_id;
-        // $stores_id = _getStoreCookie() ? _getStoreCookie() . ',' . $store_id : $store_id;
+        $store_id = is_array($store_id) ? implode(',', $store_id) : $store_id;
+        $stores_id = _getStoreCookie() ? _getStoreCookie() . ',' . $store_id : $store_id;
 
-        $array = is_array($store_id) ? $store_id : [$store_id];
-        $stores_id = implode(',', array_merge($array, explode(',', Cookie::get('stores_id'))));
+        // $array = is_array($store_id) ? $store_id : [$store_id];
+        // $stores_id = implode(',', array_merge($array, explode(',', Cookie::get('stores_id'))));
 
         Cookie::queue('stores_id', $stores_id, '525600');
 
