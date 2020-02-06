@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="page page-home">
-        <header class="{{ !$stores ? 'header-no-store' : '' }}">
+        <header class="{{ !$stores->count() ? 'header-no-store' : '' }}">
             <a href="{{ route('home') }}" class="logo">
                 <img src="{{ asset('images/logo-mosaic.png') }}" alt="Mosaic" />
 
                 <span class="logo-name">Mosaic</span>
             </a>
 
-            @if ($stores)
+            @if ($stores->count())
                 {!! Form::open(['method' => 'GET', 'class' => 'form-search']) !!}
                     {!! Form::text('keyword', null, ['placeholder' => 'Pesquisar produto', 'autocomplete' => 'off']) !!}
 
@@ -25,7 +25,7 @@
                         <a href="{{ route('stores-list') }}">EDITAR LOJAS</a>
                     </li>
 
-                    @if ($stores)
+                    @if ($stores->count())
                         <li>
                             <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
                         </li>
@@ -40,7 +40,7 @@
             </nav>
         </header>
 
-        @if ($stores)
+        @if ($stores->count())
             <div class="stores" data-routestores="{{ $route_stores }}">
                 <ul>
                     @foreach ($stores as $key => $store)

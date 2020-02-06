@@ -27,7 +27,7 @@ class StoreController extends Controller
     {
         session(['filter_category' => $category_slug]);
 
-        $stores = Store::whereIn('id', _getActiveStores());
+        $stores = Store::with('categories')->whereIn('id', _getActiveStores());
 
         if ($category_slug != 'all') {
             $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
@@ -42,7 +42,7 @@ class StoreController extends Controller
 
     public function activate($store_id)
     {
-        $store_id = is_array($store_id) ? implode(',', $store_id) : $store_id;
+        // $store_id = is_array($store_id) ? implode(',', $store_id) : $store_id;
         $stores_id = _getStoreCookie() ? _getStoreCookie() . ',' . $store_id : $store_id;
 
         Cookie::queue('stores_id', $stores_id, '525600');

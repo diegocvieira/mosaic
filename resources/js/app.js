@@ -28,12 +28,12 @@ $(function() {
         $(this).remove();
     });
 
-    // Show store homepage
+    // Show store page
     $(document).on('click', '.stores a', function(e) {
         e.preventDefault();
 
         var keyword = convertToSlug($('header .form-search').find('input[type=text]').val()),
-            store_index = $(this).parent().index(),
+            // store_index = $(this).parent().index(),
             slug = $(this).data('slug');
 
         sessionStorage.setItem('store_set', slug);
@@ -41,21 +41,37 @@ $(function() {
         $('.stores').find('a').removeClass('active');
         $(this).addClass('active');
 
+        if (keyword) {
+            var href = $(this).data('search').replace('__keyword__', keyword),
+                slug = slug + '-search';
+        } else {
+            var href = $(this).attr('href');
+        }
+
         if (!$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-            $('.iframes').append("<iframe src='" + $(this).attr('href') + "' data-slug='" + slug + "' is='x-frame-bypass' class='active'></iframe>");
+            $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass' class='active'></iframe>");
         }
 
         $('.iframes').find('iframe').removeClass('active');
         $('.iframes').find('iframe[data-slug=' + slug + ']').addClass('active');
 
-        $('.stores').find('li').each(function(index, element) {
-            var store = $(this).find('a'),
-                slug = store.data('slug');
+        loadNextStores($(this).parent().index(), keyword);
 
-            if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-                $('.iframes').append("<iframe src='" + store.attr('href') + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
-            }
-        });
+        // $('.stores').find('li').each(function(index, element) {
+        //     var store = $(this).find('a'),
+        //         slug = store.data('slug');
+        //
+        //     if (keyword) {
+        //         var href = store.data('search').replace('__keyword__', keyword),
+        //             slug = slug + '-search';
+        //     } else {
+        //         var href = store.attr('href');
+        //     }
+        //
+        //     if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
+        //         $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
+        //     }
+        // });
     });
 
     // Search stores
@@ -69,6 +85,8 @@ $(function() {
             $('.iframes').append("<iframe src='" + site.data('search').replace('__keyword__', keyword) + "' data-slug='" + site.data('slug') + "' is='x-frame-bypass' class='active'></iframe>");
 
             $(this).find('input[type=text]').blur();
+
+            loadNextStores(site.parent().index(), keyword);
         }
 
         return false;
@@ -198,4 +216,22 @@ function convertToSlug(string) {
         .replace(/\-\-+/g, '-')         		// Replace multiple - with single -
         .replace(/^-+/, '')             		// Trim - from start of text
         .replace(/-+$/, '');
+}
+
+function loadNextStores(store_index, keyword) {
+    $('.stores').find('li').each(function(index, element) {
+        var store = $(this).find('a'),
+            slug = store.data('slug');
+
+        if (keyword) {
+            var href = store.data('search').replace('__keyword__', keyword),
+                slug = slug + '-search';
+        } else {
+            var href = store.attr('href');
+        }
+
+        if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
+            $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
+        }
+    });
 }
