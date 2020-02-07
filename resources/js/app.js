@@ -5,13 +5,13 @@ $(function() {
     $('.stores').ready(function() {
         var store = $('.stores').find('a[data-slug=' + sessionStorage.getItem('store_set') + ']');
 
-        if ($('.stores').data('routestores')) {
+        if (store && $('.stores').data('routestores')) {
             store.trigger('click');
-        }
 
-        $('.stores').animate({
-            scrollLeft: store.offset().left
-        }, 100);
+            $('.stores').animate({
+                scrollLeft: store.offset().left
+            }, 100);
+        }
     });
 
     // Open menu
