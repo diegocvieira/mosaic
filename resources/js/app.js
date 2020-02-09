@@ -80,9 +80,10 @@ $(function() {
             site = $('.stores').find('.active');
 
         if (site.length && keyword) {
-            $('.iframes').find('iframe.active').remove();
+            // $('.iframes').find('iframe.active').remove();
+            $('.iframes').find('iframe').remove();
 
-            $('.iframes').append("<iframe src='" + site.data('search').replace('__keyword__', keyword) + "' data-slug='" + site.data('slug') + "' is='x-frame-bypass' class='active'></iframe>");
+            $('.iframes').append("<iframe src='" + site.data('search').replace('__keyword__', keyword) + "' data-slug='" + site.data('slug') + "-search' is='x-frame-bypass' class='active'></iframe>");
 
             $(this).find('input[type=text]').blur();
 
