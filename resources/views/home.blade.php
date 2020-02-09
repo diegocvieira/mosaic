@@ -11,7 +11,7 @@
 
             @if ($stores->count())
                 {!! Form::open(['method' => 'GET', 'class' => 'form-search']) !!}
-                    {!! Form::text('keyword', null, ['placeholder' => 'Pesquisar produto', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('keyword', null, ['placeholder' => 'Pesquisar em todas as lojas', 'autocomplete' => 'off']) !!}
 
                     {!! Form::submit('') !!}
                 {!! Form::close() !!}
