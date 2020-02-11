@@ -107,7 +107,8 @@ $(function() {
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('.stores ul').find('li').remove();
+                $('.stores ul li, .iframes iframe').remove();
+                $('header .form-search').find('input[type=text]').val('');
 
                 $(data).each(function(index, element) {
                     $('.stores ul').append("<li><a href='" + element.url_home + "' data-search='" + element.url_search + "' data-slug='" + element.slug + "'>" + element.name + "</a></li>");
