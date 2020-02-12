@@ -51,17 +51,27 @@
                     width: 100%;
                     padding: 10px 0;
 
+                    .store-image {
+                        float: left;
+                        width: 25px;
+                        height: 25px;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+
                     .store-name {
                         float: left;
-                        width: calc(100% - 50px);
+                        width: calc(100% - 85px);
                         font-size: 14.5px;
                         color: rgb(100, 100, 100);
+                        margin: 5px 0 0 10px;
                     }
 
                     .store-status {
                         float: left;
                         position: relative;
                         width: 50px;
+                        margin-top: 4px;
 
                         .switch {
                             position: absolute;

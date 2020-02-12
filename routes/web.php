@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('store-keyword/{keyword?}', 'HomeController@storeKeyword');
+
 Route::group(['prefix' => 'lojas'], function () {
     Route::get('/', 'StoreController@list')->name('stores-list');
 

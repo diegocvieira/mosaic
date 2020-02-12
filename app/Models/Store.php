@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $fillable = ['name', 'slug', 'url_home', 'url_search'];
+    protected $fillable = ['name', 'slug', 'url_home', 'url_search', 'image'];
 
     public function categories()
     {

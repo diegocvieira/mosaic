@@ -7,6 +7,9 @@ header {
     height: 40px;
     z-index: 2;
     background-color: #fff;
+    border-bottom: 1px solid rgb(235, 235, 235);
+    padding-bottom: 10px;
+    height: auto;
 
     &.header-simple {
         height: auto;
@@ -26,23 +29,17 @@ header {
         }
     }
 
-    &.header-no-store {
-        border-bottom: 1px solid rgb(235, 235, 235);
-        padding-bottom: 10px;
-        height: auto;
+    &.header-no-store .logo {
+        width: auto;
+        position: relative;
+        top: -3px;
 
-        .logo {
-            width: auto;
-            position: relative;
-            top: -3px;
+        img {
+            margin-left: 10px;
+        }
 
-            img {
-                margin-left: 10px;
-            }
-
-            .logo-name {
-                display: inline-block;
-            }
+        .logo-name {
+            display: inline-block;
         }
     }
 

@@ -18,3 +18,12 @@ function _getStoreCookie()
 {
     return Cookie::get('stores_id');
 }
+
+function _saveImage($file)
+{
+    $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+    $file->storeAs('uploads', $imageName, 'public');
+
+    return $imageName;
+}

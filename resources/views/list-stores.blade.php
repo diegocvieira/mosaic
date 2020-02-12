@@ -14,6 +14,8 @@
                     <div class="list-stores">
                         @foreach ($category->stores as $store)
                             <div class="store" data-storeid="{{ $store->id }}">
+                                <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/58/08/6c/58086c24-5591-9106-9ad1-201648de4556/source/512x512bb.jpg" class="store-image" alt="{{ $store->name }}" />
+
                                 <h3 class="store-name">{{ $store->name }}</h3>
 
                                 <div class="store-status">

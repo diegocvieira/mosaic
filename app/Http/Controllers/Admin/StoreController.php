@@ -31,7 +31,8 @@ class StoreController extends Controller
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-'),
                 'url_home' => $request->url_home,
-                'url_search' => $request->url_search
+                'url_search' => $request->url_search,
+                'image' => _saveImage($request->image)
             ]);
 
             $store->categories()->attach($request->category);

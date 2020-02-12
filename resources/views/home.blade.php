@@ -2,16 +2,16 @@
 
 @section('content')
     <div class="page page-home">
-        <header class="{{ !$stores->count() ? 'header-no-store' : '' }}">
+        <header class="{{ !$categories->count() ? 'header-no-store' : '' }}">
             <a href="{{ route('home') }}" class="logo">
                 <img src="{{ asset('images/logo-mosaic.png') }}" alt="Mosaic" />
 
                 <span class="logo-name">Mosaic</span>
             </a>
 
-            @if ($stores->count())
+            @if ($categories->count())
                 {!! Form::open(['method' => 'GET', 'class' => 'form-search']) !!}
-                    {!! Form::text('keyword', null, ['placeholder' => 'Pesquisar em todas as lojas', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('keyword', session('keyword'), ['placeholder' => 'Pesquisar em todas as lojas', 'autocomplete' => 'off']) !!}
 
                     {!! Form::submit('') !!}
                 {!! Form::close() !!}
@@ -25,12 +25,12 @@
                         <a href="{{ route('stores-list') }}">EDITAR LOJAS</a>
                     </li>
 
-                    @if ($stores->count())
+                    @if ($categories->count())
                         <li>
                             <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
                         </li>
 
-                        @foreach ($categories as $category)
+                        @foreach ($categories_filter as $category)
                             <li>
                                 <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
                             </li>
@@ -40,20 +40,24 @@
             </nav>
         </header>
 
-        @if ($stores->count())
-            <div class="stores" data-routestores="{{ $route_stores }}">
-                <ul>
-                    @foreach ($stores as $key => $store)
-                        <li>
-                            <a href="{{ $store->url_home }}" data-search="{{ $store->url_search }}" data-slug="{{ $store->slug }}" class="{{ $key == 0 ? 'active' : '' }}">{{ $store->name }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+        @if ($categories->count())
+            <div class="stores">
+                @foreach ($categories as $category)
+                    <h4 class="category-name">{{ $category->name }}</h4>
 
-            <div class="iframes">
-                @foreach ($stores->take(4) as $key => $store)
-                    <iframe src="{{ $store->url_home }}" is="x-frame-bypass" data-slug="{{ $store->slug }}" class="{{ $key == 0 ? 'active' : '' }}"></iframe>
+                    @if (session('keyword'))
+                        <span class="advice">Selecione uma loja para ver os produtos</span>
+                    @endif
+
+                    @foreach ($category->stores as $store)
+                        <a href="{{ session('keyword') ? str_replace('__keyword__', session('keyword'), $store->url_search) : $store->url_home }}" data-search="{{ $store->url_search }}" class="store">
+                            <div class="store-image">
+                                <img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" />
+                            </div>
+
+                            <h3 class="store-name">{{ $store->name }}</h3>
+                        </a>
+                    @endforeach
                 @endforeach
             </div>
 

@@ -1,19 +1,6 @@
 $(function() {
     $('body').css('opacity', '1');
 
-    // Set store again if the users come from the stores page
-    $('.stores').ready(function() {
-        var store = $('.stores').find('a[data-slug=' + sessionStorage.getItem('store_set') + ']');
-
-        if (store && $('.stores').data('routestores')) {
-            store.trigger('click');
-
-            $('.stores').animate({
-                scrollLeft: store.offset().left
-            }, 100);
-        }
-    });
-
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
         $('header').append("<div class='backdrop backdrop-menu'></div>");
@@ -28,66 +15,21 @@ $(function() {
         $(this).remove();
     });
 
-    // Show store page
-    $(document).on('click', '.stores a', function(e) {
-        e.preventDefault();
-
-        var keyword = convertToSlug($('header .form-search').find('input[type=text]').val()),
-            // store_index = $(this).parent().index(),
-            slug = $(this).data('slug');
-
-        sessionStorage.setItem('store_set', slug);
-
-        $('.stores').find('a').removeClass('active');
-        $(this).addClass('active');
-
-        if (keyword) {
-            var href = $(this).data('search').replace('__keyword__', keyword),
-                slug = slug + '-search';
-        } else {
-            var href = $(this).attr('href');
-        }
-
-        if (!$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-            $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass' class='active'></iframe>");
-        }
-
-        $('.iframes').find('iframe').removeClass('active');
-        $('.iframes').find('iframe[data-slug=' + slug + ']').addClass('active');
-
-        loadNextStores($(this).parent().index(), keyword);
-
-        // $('.stores').find('li').each(function(index, element) {
-        //     var store = $(this).find('a'),
-        //         slug = store.data('slug');
-        //
-        //     if (keyword) {
-        //         var href = store.data('search').replace('__keyword__', keyword),
-        //             slug = slug + '-search';
-        //     } else {
-        //         var href = store.attr('href');
-        //     }
-        //
-        //     if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-        //         $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
-        //     }
-        // });
-    });
-
     // Search stores
     $(document).on('submit', 'header .form-search', function() {
-        var keyword = convertToSlug($(this).find('input[type=text]').val()),
-            site = $('.stores').find('.active');
+        var keyword = convertToSlug($(this).find('input[type=text]').val());
 
-        if (site.length && keyword) {
-            // $('.iframes').find('iframe.active').remove();
-            $('.iframes').find('iframe').remove();
+        if (keyword) {
+            $('.stores a').each(function(index, element) {
+                $(this).attr('href', $(this).data('search').replace('__keyword__', keyword));
+            });
 
-            $('.iframes').append("<iframe src='" + site.data('search').replace('__keyword__', keyword) + "' data-slug='" + site.data('slug') + "-search' is='x-frame-bypass' class='active'></iframe>");
+            if (!$('.stores').find('.advice').length) {
+                $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
+            }
 
-            $(this).find('input[type=text]').blur();
-
-            loadNextStores(site.parent().index(), keyword);
+            // store keyword in session
+            $.ajax({ url: '/store-keyword/' + keyword, method: 'GET' });
         }
 
         return false;
@@ -102,23 +44,38 @@ $(function() {
 
         $('header .backdrop-menu').trigger('click');
 
+        $('body').append("<img src='/images/loading.gif' class='loading' />");
+
         $.ajax({
             url: $(this).attr('href'),
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('.stores ul li, .iframes iframe').remove();
+                $('.loading').remove();
+
+                $('.stores').html('');
                 $('header .form-search').find('input[type=text]').val('');
 
-                $(data).each(function(index, element) {
-                    $('.stores ul').append("<li><a href='" + element.url_home + "' data-search='" + element.url_search + "' data-slug='" + element.slug + "'>" + element.name + "</a></li>");
+                // Remove keyword in session
+                $.ajax({ url: '/store-keyword', method: 'GET' });
+
+                $(data).each(function(index, category) {
+                    $('.stores').append("<h4 class='category-name'>" + category.name + "</h4>");
+
+                    $(category.stores).each(function(index, store) {
+                        $('.stores').append(
+                            "<a href='" + store.url_home + "' data-search='" + store.url_search + "' class='store'>"
+                                + "<div class='store-image'>"
+                                    + "<img src='https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/58/08/6c/58086c24-5591-9106-9ad1-201648de4556/source/512x512bb.jpg' alt='" + store.name + "' />"
+                                + "</div>"
+                                + "<h3 class='store-name'>" + store.name + "</h3>"
+                            + "</a>");
+                    });
                 });
-
-                $('.stores').find('li:first a').trigger('click');
-
-                $('.stores').animate({ scrollLeft: 0 }, 'fast');
             },
             error: function (request, status, error) {
+                $('.loading').remove();
+
                 alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
             }
         });
@@ -218,22 +175,4 @@ function convertToSlug(string) {
         .replace(/\-\-+/g, '-')         		// Replace multiple - with single -
         .replace(/^-+/, '')             		// Trim - from start of text
         .replace(/-+$/, '');
-}
-
-function loadNextStores(store_index, keyword) {
-    $('.stores').find('li').each(function(index, element) {
-        var store = $(this).find('a'),
-            slug = store.data('slug');
-
-        if (keyword) {
-            var href = store.data('search').replace('__keyword__', keyword),
-                slug = slug + '-search';
-        } else {
-            var href = store.attr('href');
-        }
-
-        if ($(this).index() > store_index && $(this).index() <= (store_index + 3) && !$('.iframes').find('iframe[data-slug=' + slug + ']').length) {
-            $('.iframes').append("<iframe src='" + href + "' data-slug='" + slug + "' is='x-frame-bypass'></iframe>");
-        }
-    });
 }

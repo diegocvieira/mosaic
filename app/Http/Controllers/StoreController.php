@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Store;
 use Cookie;
 use Mail;
 use Validator;
@@ -27,17 +26,20 @@ class StoreController extends Controller
     {
         session(['filter_category' => $category_slug]);
 
-        $stores = Store::with('categories')->whereIn('id', _getActiveStores());
+        $categories = Category::with(['stores' => function ($query) {
+                $query->orderBy('name', 'ASC');
+            }])
+            ->whereHas('stores', function ($query) {
+                $query->whereIn('stores.id', _getActiveStores());
+            });
 
         if ($category_slug != 'all') {
-            $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
-                    $query->where('slug', $category_slug);
-                });
+            $categories = $categories->where('slug', $category_slug);
         }
 
-        $stores = $stores->orderBy('name', 'ASC')->get();
+        $categories = $categories->orderBy('name', 'ASC')->get();
 
-        return json_encode($stores);
+        return json_encode($categories);
     }
 
     public function activate($store_id)
