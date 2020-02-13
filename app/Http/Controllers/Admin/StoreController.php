@@ -71,6 +71,10 @@ class StoreController extends Controller
                 'url_search' => $request->url_search
             ]);
 
+            if ($request->image) {
+                $store->update(['image' => _saveImage($request->image)]);
+            }
+
             $store->categories()->detach();
             $store->categories()->attach($request->category);
 

@@ -44,7 +44,7 @@ $(function() {
 
         $('header .backdrop-menu').trigger('click');
 
-        $('body').append("<img src='/images/loading.gif' class='loading' />");
+        $('body').append("<div class='loading'></div>");
 
         $.ajax({
             url: $(this).attr('href'),
@@ -66,7 +66,7 @@ $(function() {
                         $('.stores').append(
                             "<a href='" + store.url_home + "' data-search='" + store.url_search + "' class='store'>"
                                 + "<div class='store-image'>"
-                                    + "<img src='https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/58/08/6c/58086c24-5591-9106-9ad1-201648de4556/source/512x512bb.jpg' alt='" + store.name + "' />"
+                                    + "<img src='/storage/uploads/" + store.image + "' alt='" + store.name + "' />"
                                 + "</div>"
                                 + "<h3 class='store-name'>" + store.name + "</h3>"
                             + "</a>");
