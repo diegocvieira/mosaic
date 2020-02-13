@@ -51,9 +51,9 @@
 
                     @foreach ($category->stores as $store)
                         <a href="{{ session('keyword') ? str_replace('__keyword__', session('keyword'), $store->url_search) : $store->url_home }}" data-search="{{ $store->url_search }}" class="store">
-                            <div class="store-image">
-                                <img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" />
-                            </div>
+                            <!-- <div class="store-image"> -->
+                            <img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" class="store-image" />
+                            <!-- </div> -->
 
                             <h3 class="store-name">{{ $store->name }}</h3>
                         </a>
