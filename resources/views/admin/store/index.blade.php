@@ -24,7 +24,7 @@
                 <tbody>
                     @foreach ($stores as $store)
                         <tr>
-                            <td><img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" style="width: 25px; height: 25px; object-fit: cover; object-position: center;" /></td>
+                            <td><img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" style="width: 25px; height: 25px; object-fit: contain; object-position: center;" /></td>
                             <td>{{ $store->name }}</td>
                             <td>{{ $store->url_home }}</td>
                             <td>{{ $store->url_search }}</td>
