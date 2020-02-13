@@ -27,7 +27,8 @@ class StoreController extends Controller
         session(['filter_category' => $category_slug]);
 
         $categories = Category::with(['stores' => function ($query) {
-                $query->orderBy('name', 'ASC');
+                $query->whereIn('stores.id', _getActiveStores())
+                    ->orderBy('name', 'ASC');
             }])
             ->whereHas('stores', function ($query) {
                 $query->whereIn('stores.id', _getActiveStores());
@@ -70,7 +71,7 @@ class StoreController extends Controller
         $validator = Validator::make(
             $request->all(),
             ['store_name' => 'required', 'store_url' => 'required'],
-            ['store_name.required' => 'Informe o nome da loja.', 'store_url' => 'Informe o site da loja.']
+            ['store_name.required' => 'Informe o nome da loja.', 'store_url.required' => 'Informe o site da loja.']
         );
 
         if ($validator->fails()) {
