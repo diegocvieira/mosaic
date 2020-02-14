@@ -17,7 +17,8 @@ $(function() {
 
     // Search stores
     $(document).on('submit', 'header .form-search', function() {
-        var keyword = convertToSlug($(this).find('input[type=text]').val());
+        var input = $(this).find('input[type=text]'),
+            keyword = convertToSlug(input.val());
 
         if (keyword) {
             $('.stores a').each(function(index, element) {
@@ -27,6 +28,8 @@ $(function() {
             if (!$('.stores').find('.advice').length) {
                 $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
             }
+
+            input.blur();
 
             // store keyword in session
             $.ajax({ url: '/store-keyword/' + keyword, method: 'GET' });
@@ -65,11 +68,10 @@ $(function() {
                     $(category.stores).each(function(index, store) {
                         $('.stores').append(
                             "<a href='" + store.url_home + "' data-search='" + store.url_search + "' class='store'>"
-                                + "<div class='store-image'>"
-                                    + "<img src='/storage/uploads/" + store.image + "' alt='" + store.name + "' />"
-                                + "</div>"
+                                + "<img src='/storage/uploads/" + store.image + "' alt='" + store.name + "' class='store-image' />"
                                 + "<h3 class='store-name'>" + store.name + "</h3>"
-                            + "</a>");
+                            + "</a>"
+                        );
                     });
                 });
             },
