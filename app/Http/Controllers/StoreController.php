@@ -23,32 +23,26 @@ class StoreController extends Controller
         return view('list-stores', compact('categories'));
     }
 
-    public function search(Request $request)
+    public function storeKeyword($keyword)
     {
-        session(['keyword' => $request->keyword]);
-
-        return redirect()->route('home');
+        session(['keyword' => $keyword]);
     }
 
     public function filterCategory($category_slug)
     {
         session(['filter_category' => $category_slug]);
 
-        session(['keyword' => null]);
+        $stores = Store::with('categories')->whereIn('stores.id', _getActiveStores());
 
-        return redirect()->route('home');
+        if ($category_slug != 'all') {
+            $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
+                $query->where('slug', $category_slug);
+            });
+        }
 
-        // $stores = Store::with('categories')->whereIn('stores.id', _getActiveStores());
-        //
-        // if ($category_slug != 'all') {
-        //     $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
-        //         $query->where('slug', $category_slug);
-        //     });
-        // }
-        //
-        // $stores = $stores->orderBy('name', 'ASC')->get();
-        //
-        // return json_encode($stores);
+        $stores = $stores->orderBy('name', 'ASC')->get();
+
+        return json_encode($stores);
     }
 
     public function activate($store_id)

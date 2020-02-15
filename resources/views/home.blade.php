@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <div class="page">
+    <div class="page page-home">
         <header class="{{ !$stores->count() ? 'header-no-store' : '' }}">
             <a href="{{ route('home') }}" class="logo">
                 <img src="{{ asset('images/logo-mosaic.png') }}" alt="Mosaic" />
@@ -10,7 +10,7 @@
             </a>
 
             @if ($stores->count())
-                {!! Form::open(['method' => 'GET', 'route' => 'stores-search', 'class' => 'form-search']) !!}
+                {!! Form::open(['method' => 'GET', 'class' => 'form-search']) !!}
                     {!! Form::text('keyword', session('keyword'), ['placeholder' => 'Pesquisar em todas as lojas', 'autocomplete' => 'off']) !!}
 
                     {!! Form::submit('') !!}
@@ -27,12 +27,12 @@
 
                     @if ($stores->count())
                         <li>
-                            <a href="{{ route('stores-filter-category', 'all') }}" class="{{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
+                            <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
                         </li>
 
                         @foreach ($categories as $category)
                             <li>
-                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="{{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
+                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
                             </li>
                         @endforeach
                     @endif

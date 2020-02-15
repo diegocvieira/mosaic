@@ -13,6 +13,8 @@
     	<meta name="theme-color" content="#fff">
         <meta name="csrf-token" content="{!! csrf_token() !!}">
 
+        <style>body { opacity: 0; }</style>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
@@ -20,8 +22,6 @@
         <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
     </head>
     <body class="{{ $body_class ?? '' }}">
-        <div class="loading"></div>
-
         @if (session('flash_message'))
             <div class="alert alert-info" role="alert">
                 {{ session('flash_message') }}

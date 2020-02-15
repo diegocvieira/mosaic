@@ -17,19 +17,9 @@ class HomeController extends Controller
             ->orderBy('name', 'ASC')
             ->get();
 
-        $stores = Store::with('categories')->whereIn('stores.id', _getActiveStores());
-        if (session('filter_category') != 'all') {
-            $stores = $stores->whereHas('categories', function ($query) {
-                $query->where('slug', session('filter_category'));
-            });
-        }
-        $stores = $stores->orderBy('name', 'ASC')->get();
+        $stores = collect(json_decode(app('App\Http\Controllers\StoreController')
+            ->filterCategory(session('filter_category') ?? 'all')));
 
         return view('home', compact('stores', 'categories'));
     }
-
-    // public function storeKeyword($keyword = null)
-    // {
-    //     session(['keyword' => $keyword]);
-    // }
 }
