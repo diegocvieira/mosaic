@@ -4,7 +4,6 @@ header {
     left: 0;
     width: 100%;
     padding-top: 10px;
-    height: 40px;
     z-index: 2;
     background-color: #fff;
     border-bottom: 1px solid rgb(235, 235, 235);
@@ -12,8 +11,6 @@ header {
     height: auto;
 
     &.header-simple {
-        height: auto;
-        border-bottom: 1px solid rgb(235, 235, 235);
         padding: 15px 0 15px 15px;
 
         .back-link {
@@ -33,6 +30,7 @@ header {
         width: auto;
         position: relative;
         top: -3px;
+        margin-top: 0;
 
         img {
             margin-left: 10px;
@@ -47,6 +45,7 @@ header {
         float: left;
         width: 50px;
         text-align: center;
+        margin-top: 6px;
 
         img {
             display: inline-block;
@@ -67,6 +66,7 @@ header {
     .form-search {
         float: left;
         width: calc(100% - 100px);
+        height: 36px;
 
         input[type=text] {
             float: left;
@@ -74,7 +74,7 @@ header {
             border-top-left-radius: 15px;
             border-bottom-left-radius: 15px;
             background-color: rgb(245, 245, 245);
-            height: 30px;
+            height: 100%;
             font-size: 12.5px;
             color: #000;
             //color: rgb(150, 150, 150);
@@ -87,7 +87,7 @@ header {
             border-top-right-radius: 15px;
             border-bottom-right-radius: 15px;
             background-color: rgb(245, 245, 245);
-            height: 30px;
+            height: 100%;
             border: none;
             background-image: url('../images/icon-lupa.png');
             background-position: center;
@@ -100,6 +100,7 @@ header {
         float: right;
         width: 50px;
         position: relative;
+        margin-top: 4px;
 
         .open-menu {
             border: none;

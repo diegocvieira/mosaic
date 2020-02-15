@@ -7,6 +7,7 @@ use Cookie;
 use Mail;
 use Validator;
 use App\Models\Category;
+use App\Models\Store;
 
 class StoreController extends Controller
 {
@@ -22,25 +23,32 @@ class StoreController extends Controller
         return view('list-stores', compact('categories'));
     }
 
+    public function search(Request $request)
+    {
+        session(['keyword' => $request->keyword]);
+
+        return redirect()->route('home');
+    }
+
     public function filterCategory($category_slug)
     {
         session(['filter_category' => $category_slug]);
 
-        $categories = Category::with(['stores' => function ($query) {
-                $query->whereIn('stores.id', _getActiveStores())
-                    ->orderBy('name', 'ASC');
-            }])
-            ->whereHas('stores', function ($query) {
-                $query->whereIn('stores.id', _getActiveStores());
-            });
+        session(['keyword' => null]);
 
-        if ($category_slug != 'all') {
-            $categories = $categories->where('slug', $category_slug);
-        }
+        return redirect()->route('home');
 
-        $categories = $categories->orderBy('name', 'ASC')->get();
-
-        return json_encode($categories);
+        // $stores = Store::with('categories')->whereIn('stores.id', _getActiveStores());
+        //
+        // if ($category_slug != 'all') {
+        //     $stores = $stores->whereHas('categories', function ($query) use ($category_slug) {
+        //         $query->where('slug', $category_slug);
+        //     });
+        // }
+        //
+        // $stores = $stores->orderBy('name', 'ASC')->get();
+        //
+        // return json_encode($stores);
     }
 
     public function activate($store_id)

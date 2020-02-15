@@ -13,12 +13,14 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('store-keyword/{keyword?}', 'HomeController@storeKeyword');
+// Route::get('store-keyword/{keyword?}', 'HomeController@storeKeyword');
 
 Route::group(['prefix' => 'lojas'], function () {
     Route::get('/', 'StoreController@list')->name('stores-list');
 
     Route::get('filtro/categoria/{category_slug?}', 'StoreController@filterCategory')->name('stores-filter-category');
+
+    Route::get('busca', 'StoreController@search')->name('stores-search');
 
     Route::get('ativar/{store_id}', 'StoreController@activate')->name('store-activate');
     Route::get('desativar/{store_id}', 'StoreController@desactivate')->name('store-desactivate');

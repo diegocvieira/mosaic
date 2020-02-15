@@ -1,16 +1,16 @@
 @extends('app')
 
 @section('content')
-    <div class="page page-home">
-        <header class="{{ !$categories->count() ? 'header-no-store' : '' }}">
+    <div class="page">
+        <header class="{{ !$stores->count() ? 'header-no-store' : '' }}">
             <a href="{{ route('home') }}" class="logo">
                 <img src="{{ asset('images/logo-mosaic.png') }}" alt="Mosaic" />
 
                 <span class="logo-name">Mosaic</span>
             </a>
 
-            @if ($categories->count())
-                {!! Form::open(['method' => 'GET', 'class' => 'form-search']) !!}
+            @if ($stores->count())
+                {!! Form::open(['method' => 'GET', 'route' => 'stores-search', 'class' => 'form-search']) !!}
                     {!! Form::text('keyword', session('keyword'), ['placeholder' => 'Pesquisar em todas as lojas', 'autocomplete' => 'off']) !!}
 
                     {!! Form::submit('') !!}
@@ -25,14 +25,14 @@
                         <a href="{{ route('stores-list') }}">EDITAR LOJAS</a>
                     </li>
 
-                    @if ($categories->count())
+                    @if ($stores->count())
                         <li>
-                            <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
+                            <a href="{{ route('stores-filter-category', 'all') }}" class="{{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
                         </li>
 
-                        @foreach ($categories_filter as $category)
+                        @foreach ($categories as $category)
                             <li>
-                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
+                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="{{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
                             </li>
                         @endforeach
                     @endif
@@ -40,24 +40,20 @@
             </nav>
         </header>
 
-        @if ($categories->count())
+        @if ($stores->count())
             <div class="stores">
-                @foreach ($categories as $category)
-                    <h4 class="category-name">{{ $category->name }}</h4>
+                <h4 class="category-name">{{ (session('filter_category') && session('filter_category') != 'all') ? $stores->first()->categories[0]->name : 'Todas as lojas' }}</h4>
 
-                    @if (session('keyword'))
-                        <span class="advice">Selecione uma loja para ver os produtos</span>
-                    @endif
+                @if (session('keyword'))
+                    <span class="advice">Selecione uma loja para ver os produtos</span>
+                @endif
 
-                    @foreach ($category->stores as $store)
-                        <a href="{{ session('keyword') ? str_replace('__keyword__', session('keyword'), $store->url_search) : $store->url_home }}" data-search="{{ $store->url_search }}" class="store">
-                            <!-- <div class="store-image"> -->
-                            <img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" class="store-image" />
-                            <!-- </div> -->
+                @foreach ($stores as $store)
+                    <a href="{{ session('keyword') ? str_replace('__keyword__', session('keyword'), $store->url_search) : $store->url_home }}" data-search="{{ $store->url_search }}" class="store">
+                        <img src="{{ asset('storage/uploads/' . $store->image) }}" alt="{{ $store->name }}" class="store-image" />
 
-                            <h3 class="store-name">{{ $store->name }}</h3>
-                        </a>
-                    @endforeach
+                        <h3 class="store-name">{{ $store->name }}</h3>
+                    </a>
                 @endforeach
             </div>
 

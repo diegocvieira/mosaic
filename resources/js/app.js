@@ -1,5 +1,6 @@
 $(function() {
-    $('body').css('opacity', '1');
+    // $('body').css('opacity', '1');
+    $('.loading').remove();
 
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
@@ -16,72 +17,74 @@ $(function() {
     });
 
     // Search stores
-    $(document).on('submit', 'header .form-search', function() {
-        var input = $(this).find('input[type=text]'),
-            keyword = convertToSlug(input.val());
-
-        if (keyword) {
-            $('.stores a').each(function(index, element) {
-                $(this).attr('href', $(this).data('search').replace('__keyword__', keyword));
-            });
-
-            if (!$('.stores').find('.advice').length) {
-                $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
-            }
-
-            input.blur();
-
-            // store keyword in session
-            $.ajax({ url: '/store-keyword/' + keyword, method: 'GET' });
-        }
-
-        return false;
-    });
+    // $(document).on('submit', 'header .form-search', function() {
+    //     var input = $(this).find('input[type=text]'),
+    //         keyword = convertToSlug(input.val());
+    //
+    //     if (keyword) {
+    //         $('.stores a').each(function(index, element) {
+    //             $(this).attr('href', $(this).data('search').replace('__keyword__', keyword));
+    //         });
+    //
+    //         if (!$('.stores').find('.advice').length) {
+    //             $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
+    //         }
+    //
+    //         input.blur();
+    //
+    //         // store keyword in session
+    //         $.ajax({ url: '/store-keyword/' + keyword, method: 'GET' });
+    //
+    //         window.location.href = "https://www.mosaicapp.com.br";
+    //     }
+    //
+    //     return false;
+    // });
 
     // Stores filter category
-    $(document).on('click', 'header nav .stores-filter-category', function(e) {
-        e.preventDefault();
-
-        $('header').find('nav .stores-filter-category').removeClass('active');
-        $(this).addClass('active');
-
-        $('header .backdrop-menu').trigger('click');
-
-        $('body').append("<div class='loading'></div>");
-
-        $.ajax({
-            url: $(this).attr('href'),
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $('.loading').remove();
-
-                $('.stores').html('');
-                $('header .form-search').find('input[type=text]').val('');
-
-                // Remove keyword in session
-                $.ajax({ url: '/store-keyword', method: 'GET' });
-
-                $(data).each(function(index, category) {
-                    $('.stores').append("<h4 class='category-name'>" + category.name + "</h4>");
-
-                    $(category.stores).each(function(index, store) {
-                        $('.stores').append(
-                            "<a href='" + store.url_home + "' data-search='" + store.url_search + "' class='store'>"
-                                + "<img src='/storage/uploads/" + store.image + "' alt='" + store.name + "' class='store-image' />"
-                                + "<h3 class='store-name'>" + store.name + "</h3>"
-                            + "</a>"
-                        );
-                    });
-                });
-            },
-            error: function (request, status, error) {
-                $('.loading').remove();
-
-                alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
-            }
-        });
-    });
+    // $(document).on('click', 'header nav .stores-filter-category', function(e) {
+    //     e.preventDefault();
+    //
+    //     $('header').find('nav .stores-filter-category').removeClass('active');
+    //     $(this).addClass('active');
+    //
+    //     $('header .backdrop-menu').trigger('click');
+    //
+    //     $('body').append("<div class='loading'></div>");
+    //
+    //     $.ajax({
+    //         url: $(this).attr('href'),
+    //         method: 'GET',
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             $('.loading').remove();
+    //
+    //             $('.stores').html('');
+    //             $('header .form-search').find('input[type=text]').val('');
+    //
+    //             // Remove keyword in session
+    //             $.ajax({ url: '/store-keyword', method: 'GET' });
+    //
+    //             $('.stores').append("<h4 class='category-name'>" + $(data)[0].categories[0].name + "</h4>");
+    //
+    //             $(data).each(function(index, store) {
+    //                 $('.stores').append(
+    //                     "<a href='" + store.url_home + "' data-search='" + store.url_search + "' class='store'>"
+    //                         + "<img src='/storage/uploads/" + store.image + "' alt='" + store.name + "' class='store-image' />"
+    //                         + "<h3 class='store-name'>" + store.name + "</h3>"
+    //                     + "</a>"
+    //                 );
+    //             });
+    //
+    //             window.location.href = "https://www.mosaicapp.com.br";
+    //         },
+    //         error: function (request, status, error) {
+    //             $('.loading').remove();
+    //
+    //             alert('Ocorreu um erro inesperado. Por favor, tente novamente.');
+    //         }
+    //     });
+    // });
 
     // Show stores
     $(document).on('click', '.page-list-stores .category-name', function() {

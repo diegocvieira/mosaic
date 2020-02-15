@@ -49,29 +49,29 @@
                 .store {
                     float: left;
                     width: 100%;
-                    padding: 10px 0;
+                    // padding: 10px 0;
 
                     .store-image {
                         float: left;
-                        width: 25px;
-                        height: 25px;
+                        width: 50px;
+                        height: 50px;
                         object-fit: contain;
                         object-position: center;
                     }
 
                     .store-name {
                         float: left;
-                        width: calc(100% - 85px);
+                        width: calc(100% - 110px);
                         font-size: 14.5px;
                         color: #646464;
-                        margin: 5px 0 0 10px;
+                        margin: 15px 0 0 10px;
                     }
 
                     .store-status {
                         float: left;
                         position: relative;
                         width: 50px;
-                        margin-top: 4px;
+                        margin-top: 17px;
 
                         .switch {
                             position: absolute;

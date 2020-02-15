@@ -11,20 +11,25 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories_filter = Category::whereHas('stores', function ($query) {
+        $categories = Category::whereHas('stores', function ($query) {
                 $query->whereIn('stores.id', _getActiveStores());
             })
             ->orderBy('name', 'ASC')
             ->get();
 
-        $categories = collect(json_decode(app('App\Http\Controllers\StoreController')
-            ->filterCategory(session('filter_category') ?? 'all')));
+        $stores = Store::with('categories')->whereIn('stores.id', _getActiveStores());
+        if (session('filter_category') != 'all') {
+            $stores = $stores->whereHas('categories', function ($query) {
+                $query->where('slug', session('filter_category'));
+            });
+        }
+        $stores = $stores->orderBy('name', 'ASC')->get();
 
-        return view('home', compact('categories', 'categories_filter'));
+        return view('home', compact('stores', 'categories'));
     }
 
-    public function storeKeyword($keyword = null)
-    {
-        session(['keyword' => $keyword]);
-    }
+    // public function storeKeyword($keyword = null)
+    // {
+    //     session(['keyword' => $keyword]);
+    // }
 }
