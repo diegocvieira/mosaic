@@ -56,12 +56,6 @@
                     </a>
                 @endforeach
             </div>
-
-            <?php /*<div class="no-store">
-                <p>
-                    Selecione uma loja antes de<br>fazer a sua pesquisa
-                </p>
-            </div>*/ ?>
         @else
             <div class="no-store">
                 <p>
