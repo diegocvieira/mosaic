@@ -45,7 +45,7 @@ header {
         float: left;
         width: 50px;
         text-align: center;
-        margin-top: 6px;
+        margin-top: 4px;
 
         img {
             display: inline-block;
@@ -57,9 +57,10 @@ header {
             font-family: 'ProductSansRegular';
             display: none;
             position: relative;
-            top: 3px;
+            top: 4px;
             font-size: 21px;
             color: #000;
+            margin-left: 3px;
         }
     }
 
@@ -71,8 +72,8 @@ header {
         input[type=text] {
             float: left;
             width: calc(100% - 50px);
-            border-top-left-radius: 15px;
-            border-bottom-left-radius: 15px;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
             background-color: rgb(245, 245, 245);
             height: 100%;
             font-size: 12.5px;
@@ -84,8 +85,8 @@ header {
 
         input[type=submit] {
             width: 50px;
-            border-top-right-radius: 15px;
-            border-bottom-right-radius: 15px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
             background-color: rgb(245, 245, 245);
             height: 100%;
             border: none;
@@ -100,7 +101,7 @@ header {
         float: right;
         width: 50px;
         position: relative;
-        margin-top: 4px;
+        margin-top: 2px;
 
         .open-menu {
             border: none;

@@ -14,11 +14,36 @@ $(function() {
         $('header .form-search').find('input[type=text]').val(localStorage.getItem('keyword_storage'));
     }
 
+    $('header .logo').on('click', function(e) {
+        e.preventDefault();
+
+        $('body').append("<div class='loading'></div>");
+
+        var href = $(this).attr('href');
+
+        localStorage.removeItem('keyword_storage');
+        localStorage.removeItem('stores_storage');
+
+        $.ajax({
+            url: '/lojas/store-keyword',
+            method: 'GET',
+            complete: function (data) {
+                window.location.href = href;
+            }
+        });
+    });
+
     // Open menu
     $(document).on('click', 'header nav .open-menu', function() {
         $('header').append("<div class='backdrop backdrop-menu'></div>");
 
-        $('header nav ul').addClass('active');
+        var ul = $('header nav ul');
+
+        ul.addClass('active');
+
+        if (ul[0].scrollHeight >= screen.height) {
+            ul.css('bottom', '10px');
+        }
     });
 
     // Close menu
@@ -34,21 +59,27 @@ $(function() {
             keyword = convertToSlug(input.val());
 
         if (keyword) {
-            $('.stores a').each(function(index, element) {
-                $(this).attr('href', $(this).data('search').replace('__keyword__', keyword));
-            });
+            $('body').append("<div class='loading'></div>");
 
-            if (!$('.stores').find('.advice').length) {
-                $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
-            }
+            setTimeout(function() {
+                $('.loading').remove();
 
-            input.blur();
+                $('.stores a').each(function(index, element) {
+                    $(this).attr('href', $(this).data('search').replace('__keyword__', keyword));
+                });
 
-            // store keyword in session
-            $.ajax({ url: '/lojas/store-keyword/' + keyword, method: 'GET' });
+                if (!$('.stores').find('.advice').length) {
+                    $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
+                }
 
-            localStorage.setItem('stores_storage', $('.stores').html());
-            localStorage.setItem('keyword_storage', keyword);
+                input.blur();
+
+                // store keyword in session
+                $.ajax({ url: '/lojas/store-keyword/' + keyword, method: 'GET' });
+
+                localStorage.setItem('stores_storage', $('.stores').html());
+                localStorage.setItem('keyword_storage', keyword);
+            }, 1000);
         }
 
         return false;
@@ -79,7 +110,7 @@ $(function() {
                 $('header .form-search').find('input[type=text]').val('');
 
                 // Remove keyword in session
-                $.ajax({ url: '/store-keyword', method: 'GET' });
+                $.ajax({ url: '/lojas/store-keyword', method: 'GET' });
 
                 $('.stores').append("<h4 class='category-name'>" + category_name + "</h4>");
 
