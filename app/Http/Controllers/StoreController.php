@@ -23,7 +23,7 @@ class StoreController extends Controller
         return view('list-stores', compact('categories'));
     }
 
-    public function storeKeyword($keyword)
+    public function storeKeyword($keyword = null)
     {
         session(['keyword' => $keyword]);
     }

@@ -27,12 +27,12 @@
 
                     @if ($stores->count())
                         <li>
-                            <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}">Todas as lojas</a>
+                            <a href="{{ route('stores-filter-category', 'all') }}" class="stores-filter-category {{ (!session('filter_category') || session('filter_category') == 'all') ? 'active' : '' }}" data-slug="all">Todas as lojas</a>
                         </li>
 
                         @foreach ($categories as $category)
                             <li>
-                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} ">{{ $category->name }}</a>
+                                <a href="{{ route('stores-filter-category', $category->slug) }}" class="stores-filter-category {{ session('filter_category') == $category->slug ? 'active' : '' }} " data-slug="{{ $category->slug }}">{{ $category->name }}</a>
                             </li>
                         @endforeach
                     @endif

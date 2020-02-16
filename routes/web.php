@@ -18,7 +18,7 @@ Route::group(['prefix' => 'lojas'], function () {
 
     Route::get('filtro/categoria/{category_slug?}', 'StoreController@filterCategory')->name('stores-filter-category');
 
-    Route::get('store-keyword', 'StoreController@search')->name('stores-search');
+    Route::get('store-keyword/{keyword?}', 'StoreController@storeKeyword');
 
     Route::get('ativar/{store_id}', 'StoreController@activate')->name('store-activate');
     Route::get('desativar/{store_id}', 'StoreController@desactivate')->name('store-desactivate');

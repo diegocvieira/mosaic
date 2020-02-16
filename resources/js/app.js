@@ -1,8 +1,17 @@
 $(function() {
     $('body').css('opacity', '1');
 
-    if (localStorage.getItem("stores_html") != null) {
-        $('.stores').html(localStorage.getItem("stores_html"));
+    if (localStorage.getItem('stores_storage') != null) {
+        $('.page-home .stores').html(localStorage.getItem('stores_storage'));
+    }
+
+    if (localStorage.getItem('category_storage') != null) {
+        $('header').find('nav .stores-filter-category').removeClass('active');
+        $('header .stores-filter-category[data-slug=' + localStorage.getItem('category_storage') + ']').addClass('active');
+    }
+
+    if (localStorage.getItem('keyword_storage') != null) {
+        $('header .form-search').find('input[type=text]').val(localStorage.getItem('keyword_storage'));
     }
 
     // Open menu
@@ -37,6 +46,9 @@ $(function() {
 
             // store keyword in session
             $.ajax({ url: '/lojas/store-keyword/' + keyword, method: 'GET' });
+
+            localStorage.setItem('stores_storage', $('.stores').html());
+            localStorage.setItem('keyword_storage', keyword);
         }
 
         return false;
@@ -46,7 +58,8 @@ $(function() {
     $(document).on('click', 'header nav .stores-filter-category', function(e) {
         e.preventDefault();
 
-        var category_name = $(this).text();
+        var category_name = $(this).text(),
+            category_slug = $(this).data('slug');
 
         $('header').find('nav .stores-filter-category').removeClass('active');
         $(this).addClass('active');
@@ -79,7 +92,8 @@ $(function() {
                     );
                 });
 
-                localStorage.setItem("stores_html", $('.stores').html());
+                localStorage.setItem('stores_storage', $('.stores').html());
+                localStorage.setItem('category_storage', category_slug);
             },
             error: function (request, status, error) {
                 $('.loading').remove();
