@@ -59,6 +59,8 @@ $(function() {
             keyword = convertToSlug(input.val());
 
         if (keyword) {
+            input.blur();
+
             $('body').append("<div class='loading'></div>");
 
             setTimeout(function() {
@@ -71,8 +73,6 @@ $(function() {
                 if (!$('.stores').find('.advice').length) {
                     $('.stores').find('.category-name').after("<span class='advice'>Selecione uma loja para ver os produtos</span>");
                 }
-
-                input.blur();
 
                 // store keyword in session
                 $.ajax({ url: '/lojas/store-keyword/' + keyword, method: 'GET' });
