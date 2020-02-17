@@ -128,7 +128,7 @@ header {
             transition: .2s;
             opacity: 0;
             visibility: hidden;
-            max-height: 100%;
+            max-height: calc(100% - 20px);
             overflow: auto;
 
             &.active {

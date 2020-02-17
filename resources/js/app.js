@@ -41,9 +41,9 @@ $(function() {
 
         ul.addClass('active');
 
-        if (ul[0].scrollHeight >= screen.height) {
-            ul.css('bottom', '10px');
-        }
+        // if (ul[0].scrollHeight >= screen.height) {
+        //     ul.css('bottom', '10px');
+        // }
     });
 
     // Close menu
