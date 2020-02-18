@@ -6,7 +6,7 @@
             <a href="{{ route('home') }}" class="logo">
                 <img src="{{ asset('images/logo-mosaic.png') }}" alt="Mosaic" />
 
-                <span class="logo-name">Mosaic</span>
+                <span class="logo-name">Mosaico</span>
             </a>
 
             @if ($stores->count())
@@ -59,7 +59,7 @@
         @else
             <div class="no-store">
                 <p>
-                    Toque em <img src="{{ asset('images/icon-menu.png') }}" alt="" /> para adicionar<br>lojas ao seu Mosaic
+                    Toque em <img src="{{ asset('images/icon-menu.png') }}" alt="" /> para adicionar<br>lojas ao seu Mosaico
                 </p>
             </div>
         @endif
